@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+  <h2 class="text-center mb-4">Nuestros Servicios</h2>
+
+  <div class="row text-center gy-4">
+
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h3 class="card-title mb-3">🛠 Obras Civiles</h3>
+          <ul class="list-unstyled fs-5 text-start">
+            <li>• Construcción de cimientos y bases sólidas</li>
+            <li>• Levantamiento preciso de muros y tabiques</li>
+            <li>• Pérgolas, quinchos y terrazas personalizadas</li>
+            <li>• Revestimientos y terminaciones profesionales</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h3 class="card-title mb-3">🚚 Transporte</h3>
+          <ul class="list-unstyled fs-5 text-start">
+            <li>• Traslado de maquinaria pesada con cuidado</li>
+            <li>• Transporte seguro de materiales</li>
+            <li>• Mudanzas y traslado de mobiliario</li>
+            <li>• Gestión de contenedores y desechos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h3 class="card-title mb-3">🔧 Mantenimiento</h3>
+          <ul class="list-unstyled fs-5 text-start">
+            <li>• Reparaciones estructurales confiables</li>
+            <li>• Pintura y recubrimientos protectores duraderos</li>
+            <li>• Mantenimiento de redes de agua y desagüe</li>
+            <li>• Revisión y optimización de sistemas de climatización</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="my-5">
+
+  <div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+      <h2 class="mb-3">¿Por qué elegir CBC E.I.R.L.?</h2>
+      <ul class="list-unstyled fs-5 mb-4">
+        <li>✔ Personal calificado y comprometido</li>
+        <li>✔ Materiales certificados y de calidad</li>
+        <li>✔ Cumplimiento estricto de plazos</li>
+        <li>✔ Atención personalizada y cercana</li>
+      </ul>
+      <p class="fs-5">¿Quieres un presupuesto? <a href="{% url 'contacto' %}" class="btn btn-primary px-4">Contáctanos hoy</a> y recibe una cotización sin compromiso.</p>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

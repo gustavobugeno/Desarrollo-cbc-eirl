@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+
+
+
+  <h1>Nuestros Servicios</h1>
+  <div class="row d-flex flex-wrap">
+    {% for servicio in servicios %}
+      <div class="col-md-4 d-flex align-items-stretch">
+        <div class="card mb-4 shadow-sm">
+
+          {% if servicio.imagen %}
+            <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.titulo }}">
+
+
+
+
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ servicio.titulo }}</h5>
+            <p class="card-text">{{ servicio.descripcion }}</p>
+            <p class="text-muted">
+              ¿Te interesa este servicio? Escríbenos y recibe tu cotización personalizada.
+            </p>
+            <a href="{% url 'solicitar_info' servicio.id %}" class="btn btn-primary">Solicitar Información</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No hay servicios disponibles por ahora.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Solicitar Información</h2>
+
+  <div class="mb-4">
+    <h4>{{ servicio.titulo|escape }}</h4>
+    <p>{{ servicio.descripcion|linebreaksbr }}</p>
+
+    {% if servicio.imagen %}
+      <img src="{{ servicio.imagen.url }}" class="img-fluid img-detalle" alt="{{ servicio.titulo|escape }}">
+    {% endif %}
+
+    {% if servicio.imagenes_extra.all %}
+      <div class="galeria-imagenes d-flex flex-wrap gap-3 mt-3">
+        {% for img in servicio.imagenes_extra.all %}
+          <div class="imagen-extra">
+            <img src="{{ img.imagen.url }}" class="img-servicio rounded shadow" alt="Imagen relacionada a {{ servicio.titulo|escape }}">
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  <form method="post" novalidate class="mt-4">
+    {% csrf_token %}
+
+    {% if form.errors %}
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        {% for field in form %}
+          {% for error in field.errors %}
+            <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+          {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+  </form>
+{% endblock %}

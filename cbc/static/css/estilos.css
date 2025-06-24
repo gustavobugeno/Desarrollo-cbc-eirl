@@ -1,0 +1,129 @@
+/* estilos.css */
+
+/* Navbar con azul oscuro */
+nav.navbar {
+  background-color: #003366 !important; /* azul oscuro */
+}
+
+/* Links del navbar en color blanco */
+nav.navbar .nav-link {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+nav.navbar .nav-link:hover {
+  color: #D35400 !important; /* naranja quemado al pasar */
+}
+
+/* Fondo general y texto */
+body {
+  background-color: #f9f9f9; /* gris muy claro para evitar blanco puro */
+  color: #333333;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Contenedor principal */
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Botones primarios */
+.btn-primary {
+  background-color: #D35400;
+  border-color: #D35400;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background-color: #B55A00;
+  border-color: #B55A00;
+}
+
+/* --------------------------- */
+/* Estilos que me enviaste ahora */
+
+/* Flex container para filas */
+.row.d-flex.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* Columnas con flexbox y ancho fijo */
+.col-md-4.d-flex.align-items-stretch {
+    flex: 0 0 320px;
+    max-width: 320px;
+    display: flex;
+    box-sizing: border-box; /* para que padding/margin no sumen ancho */
+    padding: 0; /* opcional si hay padding no deseado */
+}
+
+/* Tarjetas */
+.card {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+/* Imágenes dentro de la tarjeta */
+.card-img-top, .img-servicio {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 10px 10px 0 0;
+}
+
+/* Cuerpo de la tarjeta */
+.card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* Imagen detalle en página individual */
+.img-detalle {
+    width: 100%;
+    height: auto;
+    object-fit: contain; /* o "cover" si quieres que rellene el espacio */
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+    max-height: 400px; /* opcional: para limitar si la imagen es muy alta */
+}
+
+/* Galería de imágenes extras */
+.galeria-imagenes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Cada imagen extra en galería */
+.imagen-extra {
+    flex: 0 0 250px;
+    max-width: 250px;
+}
+
+/* Imagen de servicio en listados */
+.img-servicio {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
