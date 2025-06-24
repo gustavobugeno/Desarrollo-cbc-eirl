@@ -3,6 +3,7 @@ Django==5.2.2
 django-csp==4.0
 et_xmlfile==2.0.0
 Faker==37.4.0
+mysqlclient==2.2.7
 numpy==2.3.0
 openpyxl==3.1.5
 packaging==25.0
