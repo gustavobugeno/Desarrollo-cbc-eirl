@@ -52,6 +52,19 @@
   </div>
 
   <hr class="my-5">
+<!-- SECCIÓN: Revisar código de seguimiento -->
+<div class="row justify-content-center mb-5">
+  <div class="col-md-6 text-center">
+    <h2 class="mb-3">🔍 Revisa tu código de seguimiento</h2>
+    <form method="get" action="{% url 'seguimiento_base' %}">
+      <div class="input-group mb-3">
+        <input type="text" name="codigo" class="form-control" placeholder="Ingresa tu código" required>
+        <button class="btn btn-primary" type="submit">Revisar</button>
+      </div>
+    </form>
+    <p class="text-muted">Ingresa el código que recibiste para ver el estado de tu solicitud.</p>
+  </div>
+</div>
 
   <div class="row justify-content-center">
     <div class="col-md-8 text-center">

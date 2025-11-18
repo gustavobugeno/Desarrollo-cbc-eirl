@@ -28,6 +28,15 @@ urlpatterns = [
     path('solicitar-info/<int:servicio_id>/', views.solicitar_info, name='solicitar_info'),  
     path('gracias/', views.gracias, name='gracias'),
 
+    # ⭐ Ruta para mostrar seguimiento por código
+    path("seguimiento/<str:codigo>/", views.seguimiento, name="seguimiento"),
+
+    # ⭐ Ruta para recibir el código desde el formulario GET y redirigir
+    path("seguimiento/", views.seguimiento_base, name="seguimiento_base"),
+    path('seguimiento/<str:codigo>/aprobar/', views.aprobar_solicitud, name='aprobar_solicitud'),
+    path('seguimiento/<str:codigo>/rechazar/', views.rechazar_solicitud, name='rechazar_solicitud'),
+    path('seguimiento/<str:codigo>/cambios/', views.solicitar_cambios, name='solicitar_cambios'),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

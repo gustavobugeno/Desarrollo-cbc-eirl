@@ -102,12 +102,8 @@ WSGI_APPLICATION = 'cbc.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mydb',  # porque no especificaste uno al crearla
-        'USER': 'admin',
-        'PASSWORD': 'Ali1309$',
-        'HOST': 'database-1.cyjprzq0soe7.us-east-1.rds.amazonaws.com',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
     }
 }
 

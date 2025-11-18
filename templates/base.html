@@ -25,5 +25,25 @@
     <div class="container mt-4">
         {% block content %}{% endblock %}
     </div>
+    </div>
+
+    <!-- Aquí van tus scripts -->
+    {% block scripts %}{% endblock %}
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const btnCambios = document.getElementById("btn-solicitar-cambios");
+        const formCambios = document.getElementById("form-cambios");
+
+        btnCambios.addEventListener("click", function() {
+            if (formCambios.style.display === "none") {
+                formCambios.style.display = "block";
+            } else {
+                formCambios.style.display = "none";
+            }
+        });
+    });
+    </script>
+</body>
+</html>
 </body>
 </html>
