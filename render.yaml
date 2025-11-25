@@ -1,0 +1,13 @@
+services:
+  
+type: web
+  name: cbc-eirl
+  env: python
+  buildCommand: "./build.sh"
+  startCommand: "gunicorn core.wsgi:application"
+  plan: free
+  envVars:
+key: DJANGO_SECRET_KEY
+    generateValue: true
+key: DJANGO_DEBUG
+  value: "False"
