@@ -144,16 +144,23 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# -----------------------------
+# MEDIA CONFIG (solo URL)
+# -----------------------------
+MEDIA_URL = '/media/'
+
+# -----------------------------
 # CLOUDINARY CONFIG
+# -----------------------------
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv("CLOUDINARY_CLOUD_NAME"),
     'API_KEY': os.getenv("CLOUDINARY_API_KEY"),
     'API_SECRET': os.getenv("CLOUDINARY_API_SECRET"),
 }
 
+# Hace que TODAS las imágenes y archivos subidos se vayan a Cloudinary
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-MEDIA_URL = '/media/'
 
 
 # DESACTIVAR SMTP (Render NO permite conexiones SMTP)
