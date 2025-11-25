@@ -41,6 +41,3 @@ urlpatterns = [
     path("create-admin/", create_admin, name="create_admin"),
 
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

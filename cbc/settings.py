@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv 
 import os
@@ -28,10 +28,10 @@ DEBUG = ENVIRONMENT != 'production'
 
 # ALLOWED_HOSTS variable según entorno
 if ENVIRONMENT == 'production':
-    # Aquí defines tu IP pública AWS o dominio, ejemplo:
-    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '54.123.45.67').split(',')
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'desarrollo-cbc-eirl.onrender.com').split(',')
 else:
     ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+
 
 if ENVIRONMENT == 'production':
     SECURE_SSL_REDIRECT = True
@@ -65,6 +65,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'csp',
+    'cloudinary',
+    'cloudinary_storage',
+
 ]
 
 MIDDLEWARE = [
@@ -105,12 +108,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cbc.wsgi.application'
 
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.config(
+        default=os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
+
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -141,20 +148,37 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# -----------------------------
+# CLOUDINARY CONFIG
+# -----------------------------
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv("CLOUDINARY_CLOUD_NAME"),
+    'API_KEY': os.getenv("CLOUDINARY_API_KEY"),
+    'API_SECRET': os.getenv("CLOUDINARY_API_SECRET"),
+}
+
+# Hace que TODAS las imágenes y archivos subidos se vayan a Cloudinary
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# -----------------------------
+# MEDIA CONFIG (solo URL)
+# -----------------------------
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+# DESACTIVAR SMTP (Render NO permite conexiones SMTP)
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+# Mantengo tus variables para futuro uso, solo las dejo comentadas.
+# Para producción real usaremos SendGrid o SES, no SMTP.
 
-DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
-
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+# DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 
 
 CONTENT_SECURITY_POLICY = {
