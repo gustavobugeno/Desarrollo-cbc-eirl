@@ -39,5 +39,7 @@ urlpatterns = [
     path('seguimiento/<str:codigo>/rechazar/', views.rechazar_solicitud, name='rechazar_solicitud'),
     path('seguimiento/<str:codigo>/cambios/', views.solicitar_cambios, name='solicitar_cambios'),
     path("create-admin/", create_admin, name="create_admin"),
+    path("test-storage/", test_storage),
+
 
 ]
