@@ -69,17 +69,22 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'csp.middleware.CSPMiddleware',
-    'django.middleware.security.SecurityMiddleware',  # Mantener siempre
+
+    # Seguridad — SIEMPRE PRIMERO
+    'django.middleware.security.SecurityMiddleware',
+
+    # WhiteNoise — necesario para staticfiles en producción
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',  # útil en ambos entornos
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'core.middleware.RemoveServerHeaderMiddleware',
-
-
 ]
+
 
 ROOT_URLCONF = 'cbc.urls'
 
@@ -121,9 +126,18 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
+# Carpetas de estáticos en modo desarrollo
 STATICFILES_DIRS = [
     BASE_DIR / 'cbc' / 'static',
 ]
+
+# Carpeta donde Django colocará los estáticos para producción
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# WhiteNoise para servir los estáticos en producción
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
