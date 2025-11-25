@@ -16,5 +16,5 @@ sqlparse==0.5.3
 tzdata==2025.2
 gunicorn
 whitenoise
-cloudinary
-django-cloudinary-storage
+cloudinary==1.40.0
+django-cloudinary-storage==0.3.0
