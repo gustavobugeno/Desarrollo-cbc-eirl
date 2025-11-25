@@ -3,7 +3,10 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .models import Servicio, SolicitudInformacion, Presupuesto
 from .forms import SolicitarInfoForm
+from django.http import HttpResponse
 
+def test_storage(request):
+    return HttpResponse(settings.DEFAULT_FILE_STORAGE)
 # ----------------------------
 # VISTA INICIO
 # ----------------------------
