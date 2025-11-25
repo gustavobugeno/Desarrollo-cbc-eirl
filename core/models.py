@@ -3,30 +3,22 @@ import string
 from django.db import models
 from django.core.validators import RegexValidator
 
-# ⭐ IMPORTS PARA CLOUDINARY
 from cloudinary_storage.storage import (
     MediaCloudinaryStorage,
     RawMediaCloudinaryStorage
 )
 
-# --------------------------------------------
-#   Generador de CÓDIGO DE SEGUIMIENTO
-# --------------------------------------------
 def generar_codigo():
     año = "2025"
     numero = ''.join(random.choices(string.digits, k=5))
     return f"CBC-{año}-{numero}"
 
 
-# --------------------------------------------
-#   MODELO SERVICIO
-# --------------------------------------------
 class Servicio(models.Model):
     titulo = models.CharField("Nombre del Servicio", max_length=100)
     descripcion = models.TextField("Descripción", blank=True, null=True)
 
     imagen = models.ImageField(
-        "Imagen del Servicio",
         upload_to='servicios/',
         storage=MediaCloudinaryStorage(),
         blank=True,
@@ -37,11 +29,7 @@ class Servicio(models.Model):
         return self.titulo
 
 
-# --------------------------------------------
-#   MODELO SOLICITUD DE INFORMACIÓN
-# --------------------------------------------
 class SolicitudInformacion(models.Model):
-
     ESTADOS = [
         ('no_revisada', 'No revisada'),
         ('revisada', 'Revisada por experto'),
@@ -88,7 +76,6 @@ class SolicitudInformacion(models.Model):
     fecha_envio = models.DateTimeField(auto_now_add=True)
 
     codigo_seguimiento = models.CharField(max_length=30, unique=True, blank=True)
-
     comentarios_cambios = models.TextField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
@@ -100,16 +87,10 @@ class SolicitudInformacion(models.Model):
         return f"{self.nombre} - {self.codigo_seguimiento}"
 
 
-# --------------------------------------------
-#   MODELO IMÁGENES EXTRA
-# --------------------------------------------
 class ImagenServicio(models.Model):
     servicio = models.ForeignKey(
-        Servicio,
-        related_name='imagenes_extra',
-        on_delete=models.CASCADE
+        Servicio, related_name='imagenes_extra', on_delete=models.CASCADE
     )
-
     imagen = models.ImageField(
         upload_to='servicios/imagenes_extra/',
         storage=MediaCloudinaryStorage()
@@ -119,12 +100,9 @@ class ImagenServicio(models.Model):
         return f"Imagen de {self.servicio.titulo}"
 
 
-# --------------------------------------------
-#   MODELO PRESUPUESTO (PDF — RAW)
-# --------------------------------------------
 class Presupuesto(models.Model):
     solicitud = models.OneToOneField(
-        'SolicitudInformacion',
+        SolicitudInformacion,
         on_delete=models.CASCADE,
         related_name='presupuesto'
     )
