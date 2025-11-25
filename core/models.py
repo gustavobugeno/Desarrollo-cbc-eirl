@@ -4,7 +4,8 @@ from django.db import models
 from django.core.validators import RegexValidator
 
 # ⭐ AGREGAR ESTO PARA CLOUDINARY
-from cloudinary_storage.storage import MediaCloudinaryStorage
+from cloudinary_storage.storage import RawMediaCloudinaryStorage
+
 
 # --------------------------------------------
 #   Generador de CÓDIGO DE SEGUIMIENTO
