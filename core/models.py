@@ -3,6 +3,9 @@ import string
 from django.db import models
 from django.core.validators import RegexValidator
 
+# ⭐ AGREGAR ESTO PARA CLOUDINARY
+from cloudinary_storage.storage import MediaCloudinaryStorage
+
 # --------------------------------------------
 #   Generador de CÓDIGO DE SEGUIMIENTO
 #   Ejemplo: CBC-2025-00128
@@ -19,7 +22,15 @@ def generar_codigo():
 class Servicio(models.Model):
     titulo = models.CharField("Nombre del Servicio", max_length=100)
     descripcion = models.TextField("Descripción", blank=True, null=True)
-    imagen = models.ImageField("Imagen del Servicio", upload_to='servicios/', blank=True, null=True)
+
+    # ⭐ AHORA SÍ SE SUBE A CLOUDINARY
+    imagen = models.ImageField(
+        "Imagen del Servicio",
+        upload_to='servicios/',
+        storage=MediaCloudinaryStorage(),
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return self.titulo
@@ -30,7 +41,6 @@ class Servicio(models.Model):
 # --------------------------------------------
 class SolicitudInformacion(models.Model):
 
-    # Estados extendidos para tracking
     ESTADOS = [
         ('no_revisada', 'No revisada'),
         ('revisada', 'Revisada por experto'),
@@ -74,16 +84,13 @@ class SolicitudInformacion(models.Model):
     requerimientos = models.TextField()
 
     estado = models.CharField(max_length=20, choices=ESTADOS, default='no_revisada')
-
     fecha_envio = models.DateTimeField(auto_now_add=True)
 
-    # ⭐ NUEVO: Código de seguimiento único
+    # ⭐ CÓDIGO SEGUIMIENTO
     codigo_seguimiento = models.CharField(max_length=30, unique=True, blank=True)
-    # Comentarios del cliente cuando solicita cambios
+
     comentarios_cambios = models.TextField(blank=True, null=True)
 
-
-    # Genera automáticamente el código cuando se crea el registro
     def save(self, *args, **kwargs):
         if not self.codigo_seguimiento:
             self.codigo_seguimiento = generar_codigo()
@@ -97,14 +104,38 @@ class SolicitudInformacion(models.Model):
 #   MODELO IMÁGENES EXTRA
 # --------------------------------------------
 class ImagenServicio(models.Model):
-    servicio = models.ForeignKey(Servicio, related_name='imagenes_extra', on_delete=models.CASCADE)
-    imagen = models.ImageField(upload_to='servicios/imagenes_extra')
+    servicio = models.ForeignKey(
+        Servicio,
+        related_name='imagenes_extra',
+        on_delete=models.CASCADE
+    )
+
+    # ⭐ TAMBIÉN A CLOUDINARY
+    imagen = models.ImageField(
+        upload_to='servicios/imagenes_extra/',
+        storage=MediaCloudinaryStorage()
+    )
 
     def __str__(self):
         return f"Imagen de {self.servicio.titulo}"
+
+
+# --------------------------------------------
+#   MODELO PRESUPUESTO (PDF)
+# --------------------------------------------
 class Presupuesto(models.Model):
-    solicitud = models.OneToOneField('SolicitudInformacion', on_delete=models.CASCADE, related_name='presupuesto')
-    archivo = models.FileField(upload_to='presupuestos/')  # PDF o HTML
+    solicitud = models.OneToOneField(
+        'SolicitudInformacion',
+        on_delete=models.CASCADE,
+        related_name='presupuesto'
+    )
+
+    # ⭐ PDF TAMBIÉN A CLOUDINARY
+    archivo = models.FileField(
+        upload_to='presupuestos/',
+        storage=MediaCloudinaryStorage()
+    )
+
     fecha = models.DateField(auto_now_add=True)
     total = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
 
