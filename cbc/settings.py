@@ -28,10 +28,10 @@ DEBUG = ENVIRONMENT != 'production'
 
 # ALLOWED_HOSTS variable según entorno
 if ENVIRONMENT == 'production':
-    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'desarrollo-cbc-eirl.onrender.com').split(',')
 else:
     ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
-OWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+
 
 if ENVIRONMENT == 'production':
     SECURE_SSL_REDIRECT = True
