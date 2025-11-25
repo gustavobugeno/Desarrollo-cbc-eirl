@@ -63,7 +63,7 @@ def solicitar_info(request, servicio_id):
                 message=mensaje,
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=['cbc_web@hotmail.com'],
-                fail_silently=False,
+                fail_silently=True,
             )
 
             return redirect('seguimiento', codigo=solicitud.codigo_seguimiento)
