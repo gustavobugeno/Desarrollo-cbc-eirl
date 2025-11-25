@@ -160,7 +160,10 @@ CLOUDINARY_STORAGE = {
 
 # Hace que TODAS las imágenes y archivos subidos se vayan a Cloudinary
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
+# -----------------------------
+# MEDIA CONFIG (solo URL)
+# -----------------------------
+MEDIA_URL = '/media/'
 
 
 # DESACTIVAR SMTP (Render NO permite conexiones SMTP)
