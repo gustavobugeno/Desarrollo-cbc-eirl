@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.core.mail import send_mail
+from django.conf import settings
 from .models import Servicio, ImagenServicio, SolicitudInformacion, Presupuesto
 
 # ----------------------------
@@ -16,13 +18,15 @@ class PresupuestoAdmin(admin.ModelAdmin):
 
 
 # ----------------------------
-#  ADMIN PARA SOLICITUDES CON SEGUIMIENTO
+#  ADMIN PARA SOLICITUDES
 # ----------------------------
 @admin.register(SolicitudInformacion)
 class SolicitudInformacionAdmin(admin.ModelAdmin):
-    inlines = [PresupuestoInline]
 
-    # Mostrar estado con colores
+    inlines = [PresupuestoInline]
+    actions = ["enviar_correo_manual"]
+
+    # ---- CAMPO VISUAL DEL ESTADO ----
     def estado_coloreado(self, obj):
         colores = {
             'no_revisada': 'orange',
@@ -42,7 +46,7 @@ class SolicitudInformacionAdmin(admin.ModelAdmin):
         )
     estado_coloreado.short_description = "Estado"
 
-    # Campos que se muestran en el admin
+    # ---- COLUMNAS DE LISTA ----
     list_display = (
         'codigo_seguimiento',
         'nombre',
@@ -56,6 +60,53 @@ class SolicitudInformacionAdmin(admin.ModelAdmin):
     search_fields = ('nombre', 'email', 'telefono', 'codigo_seguimiento')
     list_filter = ('estado', 'servicio', 'fecha_envio')
     ordering = ('-fecha_envio',)
+
+    # ---- ENVÍO AUTOMÁTICO AL CAMBIAR ESTADO ----
+    def save_model(self, request, obj, form, change):
+        estado_cambiado = "estado" in form.changed_data
+
+        super().save_model(request, obj, form, change)
+
+        if estado_cambiado:
+            asunto = f"Actualización de su solicitud - {obj.codigo_seguimiento}"
+            mensaje = (
+                f"Hola {obj.nombre},\n\n"
+                f"Su solicitud ha cambiado de estado.\n\n"
+                f"Nuevo estado: {obj.get_estado_display()}\n\n"
+                f"Puedes revisar los detalles en:\n"
+                f"https://desarrollo-cbc-eirl.onrender.com/seguimiento/{obj.codigo_seguimiento}/\n\n"
+                f"Gracias por preferir CBC E.I.R.L."
+            )
+
+            send_mail(
+                asunto,
+                mensaje,
+                settings.EMAIL_HOST_USER,
+                [obj.email],
+                fail_silently=True,
+            )
+
+    # ---- ACCIÓN MANUAL PARA ENVIAR CORREO ----
+    @admin.action(description="Enviar correo manual al cliente")
+    def enviar_correo_manual(self, request, queryset):
+        for obj in queryset:
+            asunto = f"Mensaje sobre su solicitud {obj.codigo_seguimiento}"
+            mensaje = (
+                f"Hola {obj.nombre},\n\n"
+                f"El administrador desea comunicarse contigo sobre tu solicitud.\n\n"
+                f"Revisa tu seguimiento:\n"
+                f"https://desarrollo-cbc-eirl.onrender.com/seguimiento/{obj.codigo_seguimiento}/\n\n"
+            )
+
+            send_mail(
+                asunto,
+                mensaje,
+                settings.EMAIL_HOST_USER,
+                [obj.email],
+                fail_silently=True,
+            )
+
+        self.message_user(request, "📨 Correos enviados con éxito.")
 
 
 # ----------------------------
