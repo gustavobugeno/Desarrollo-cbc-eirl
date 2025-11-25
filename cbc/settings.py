@@ -186,7 +186,7 @@ CONTENT_SECURITY_POLICY = {
         'default-src': ("'self'",),
         'script-src': ("'self'", "cdn.jsdelivr.net"),
         'style-src': ("'self'", "cdn.jsdelivr.net"),
-        'img-src': ("'self'", "data:", "images.unsplash.com"),
+        'img-src': ("'self'", "data:", "*.cloudinary.com", "res.cloudinary.com"),
         'font-src': ("'self'", "cdn.jsdelivr.net", "fonts.gstatic.com"),
         'connect-src': ("'self'",),
         'frame-ancestors': ("'none'",),
