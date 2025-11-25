@@ -19,8 +19,8 @@ from django.urls import path
 from core import views
 from django.conf import settings
 from django.conf.urls.static import static
-
 from core.views_admin import create_admin
+from core.views import test_storage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
