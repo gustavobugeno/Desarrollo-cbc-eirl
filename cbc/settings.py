@@ -186,9 +186,12 @@ CONTENT_SECURITY_POLICY = {
         'default-src': ("'self'",),
         'script-src': ("'self'", "cdn.jsdelivr.net"),
         'style-src': ("'self'", "cdn.jsdelivr.net"),
-        'img-src': ("'self'", "data:", "*.cloudinary.com", "res.cloudinary.com"),
+        'img-src': ("'self'", "data:", "images.unsplash.com", "*.cloudinary.com", "res.cloudinary.com"),
         'font-src': ("'self'", "cdn.jsdelivr.net", "fonts.gstatic.com"),
-        'connect-src': ("'self'",),
+        'connect-src': ("'self'", "*.cloudinary.com"),
         'frame-ancestors': ("'none'",),
+        'media-src': ("'self'", "*.cloudinary.com", "res.cloudinary.com"),
     }
+}
+
 }
