@@ -1,16 +1,19 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from django.core.mail import send_mail
 from django.conf import settings
+from django.core.mail import send_mail
+
 from .models import Servicio, ImagenServicio, SolicitudInformacion, Presupuesto
 
+
 # ----------------------------
-#  ADMIN PARA PRESUPUESTOS
+#  INLINE DE PRESUPUESTO
 # ----------------------------
 class PresupuestoInline(admin.StackedInline):
     model = Presupuesto
     extra = 0
     max_num = 1
+
 
 @admin.register(Presupuesto)
 class PresupuestoAdmin(admin.ModelAdmin):
@@ -26,7 +29,7 @@ class SolicitudInformacionAdmin(admin.ModelAdmin):
     inlines = [PresupuestoInline]
     actions = ["enviar_correo_manual"]
 
-    # ---- CAMPO VISUAL DEL ESTADO ----
+    # ---- ESTADO COLOREADO ----
     def estado_coloreado(self, obj):
         colores = {
             'no_revisada': 'orange',
@@ -46,7 +49,7 @@ class SolicitudInformacionAdmin(admin.ModelAdmin):
         )
     estado_coloreado.short_description = "Estado"
 
-    # ---- COLUMNAS DE LISTA ----
+    # ---- LIST DISPLAY ----
     list_display = (
         'codigo_seguimiento',
         'nombre',
@@ -73,9 +76,9 @@ class SolicitudInformacionAdmin(admin.ModelAdmin):
                 f"Hola {obj.nombre},\n\n"
                 f"Su solicitud ha cambiado de estado.\n\n"
                 f"Nuevo estado: {obj.get_estado_display()}\n\n"
-                f"Puedes revisar los detalles en:\n"
+                f"Puede revisar el detalle en:\n"
                 f"https://desarrollo-cbc-eirl.onrender.com/seguimiento/{obj.codigo_seguimiento}/\n\n"
-                f"Gracias por preferir CBC E.I.R.L."
+                "Gracias por preferir CBC E.I.R.L."
             )
 
             send_mail(
@@ -94,7 +97,7 @@ class SolicitudInformacionAdmin(admin.ModelAdmin):
             mensaje = (
                 f"Hola {obj.nombre},\n\n"
                 f"El administrador desea comunicarse contigo sobre tu solicitud.\n\n"
-                f"Revisa tu seguimiento:\n"
+                f"Revisa tu seguimiento aquí:\n"
                 f"https://desarrollo-cbc-eirl.onrender.com/seguimiento/{obj.codigo_seguimiento}/\n\n"
             )
 
@@ -115,6 +118,7 @@ class SolicitudInformacionAdmin(admin.ModelAdmin):
 class ImagenServicioInline(admin.TabularInline):
     model = ImagenServicio
     extra = 1
+
 
 @admin.register(Servicio)
 class ServicioAdmin(admin.ModelAdmin):
