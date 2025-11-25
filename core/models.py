@@ -123,6 +123,8 @@ class ImagenServicio(models.Model):
 # --------------------------------------------
 #   MODELO PRESUPUESTO (PDF)
 # --------------------------------------------
+
+
 class Presupuesto(models.Model):
     solicitud = models.OneToOneField(
         'SolicitudInformacion',
@@ -130,10 +132,9 @@ class Presupuesto(models.Model):
         related_name='presupuesto'
     )
 
-    # ⭐ PDF TAMBIÉN A CLOUDINARY
     archivo = models.FileField(
         upload_to='presupuestos/',
-        storage=MediaCloudinaryStorage()
+        storage=RawMediaCloudinaryStorage()
     )
 
     fecha = models.DateField(auto_now_add=True)
@@ -141,3 +142,4 @@ class Presupuesto(models.Model):
 
     def __str__(self):
         return f"Presupuesto de {self.solicitud.codigo_seguimiento}"
+
