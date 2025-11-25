@@ -194,4 +194,4 @@ CONTENT_SECURITY_POLICY = {
     }
 }
 
-}
+
