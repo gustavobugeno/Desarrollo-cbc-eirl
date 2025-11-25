@@ -184,14 +184,17 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 CONTENT_SECURITY_POLICY = {
     'DIRECTIVES': {
         'default-src': ("'self'",),
-        'script-src': ("'self'", "cdn.jsdelivr.net"),
-        'style-src': ("'self'", "cdn.jsdelivr.net"),
-        'img-src': ("'self'", "data:", "images.unsplash.com", "*.cloudinary.com", "res.cloudinary.com"),
+        'script-src': ("'self'", "'unsafe-inline'", "cdn.jsdelivr.net"),
+        'style-src': ("'self'", "'unsafe-inline'", "cdn.jsdelivr.net"),
+        'img-src': ("'self'", "data:", "*.cloudinary.com", "res.cloudinary.com", "images.unsplash.com"),
         'font-src': ("'self'", "cdn.jsdelivr.net", "fonts.gstatic.com"),
-        'connect-src': ("'self'", "*.cloudinary.com"),
-        'frame-ancestors': ("'none'",),
         'media-src': ("'self'", "*.cloudinary.com", "res.cloudinary.com"),
+        'connect-src': ("'self'", "*.cloudinary.com"),
+        'frame-src': ("'self'", "*.cloudinary.com", "res.cloudinary.com"),
+        'object-src': ("'none'",),
+        'frame-ancestors': ("'self'",),
     }
 }
+
 
 
