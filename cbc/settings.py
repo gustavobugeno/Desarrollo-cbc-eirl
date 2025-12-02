@@ -156,9 +156,18 @@ CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv("CLOUDINARY_CLOUD_NAME"),
     'API_KEY': os.getenv("CLOUDINARY_API_KEY"),
     'API_SECRET': os.getenv("CLOUDINARY_API_SECRET"),
-    'RESOURCE_TYPE': 'image',  # OBLIGA GUARDAR COMO IMAGEN
-    'SECURE': True  # URLs HTTPS correctas
+    'SECURE': True,
+    'UPLOAD_OPTIONS': {
+        'resource_type': 'image',
+        'overwrite': False,
+        'invalidate': True,
+        'unique_filename': True,
+        'use_filename': True
+    }
 }
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 # Hace que TODAS las imágenes y archivos subidos se vayan a Cloudinary
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
