@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from core.views_admin import create_admin
 from core.views import test_storage
+from .views import create_admin
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +30,7 @@ urlpatterns = [
     path('contacto/', views.contacto, name='contacto'),
     path('solicitar-info/<int:servicio_id>/', views.solicitar_info, name='solicitar_info'),  
     path('gracias/', views.gracias, name='gracias'),
+    path('create-admin/', create_admin),
 
     # ⭐ Ruta para mostrar seguimiento por código
     path("seguimiento/<str:codigo>/", views.seguimiento, name="seguimiento"),
