@@ -26,11 +26,22 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-v$qd+8ub@3d*bngu4ez@#sh677
 # Debug sólo en desarrollo
 DEBUG = ENVIRONMENT != 'production'
 
-# ALLOWED_HOSTS variable según entorno
+# ALLOWED_HOSTS según entorno
 if ENVIRONMENT == 'production':
-    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'desarrollo-cbc-eirl.onrender.com').split(',')
+    ALLOWED_HOSTS = os.getenv(
+        'ALLOWED_HOSTS',
+        '.onrender.com'
+    ).split(',')
 else:
-    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+    ALLOWED_HOSTS = os.getenv(
+        'ALLOWED_HOSTS',
+        '127.0.0.1,localhost'
+    ).split(',')
+
+# CSRF (IMPORTANTE en producción)
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com'
+]
 
 
 if ENVIRONMENT == 'production':
