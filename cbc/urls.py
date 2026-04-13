@@ -30,7 +30,7 @@ urlpatterns = [
     path('contacto/', views.contacto, name='contacto'),
     path('solicitar-info/<int:servicio_id>/', views.solicitar_info, name='solicitar_info'),  
     path('gracias/', views.gracias, name='gracias'),
-    path('create-admin/', create_admin),
+    
 
     # ⭐ Ruta para mostrar seguimiento por código
     path("seguimiento/<str:codigo>/", views.seguimiento, name="seguimiento"),
